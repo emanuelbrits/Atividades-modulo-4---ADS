@@ -1,34 +1,37 @@
-import { Controller, Get, Query, Render, Post, Res, Body } from '@nestjs/common';
+import { Controller, Get, Query, Render, Post, Res, Body, Param, Delete } from '@nestjs/common';
 import { AppService } from './app.service';
-import { ProdutoInput } from './produto.dto';
+import { ProdutoDto } from './produto.dto';
 import { Response } from 'express';
+import { Produto } from './produto';
 
 @Controller()
 export class AppController {
   constructor(private readonly appService: AppService) {}
 
-  @Get('/')
-  @Render('index')
-  hello(@Query('nome') nome = 'Perfume') {
-    const context = {
-      nome
-    }
-
-    return context
+  @Get('produtos')
+  @Render('produtos')
+  obterProdutos() {
+    const produtos: Produto[] = this.appService.obterProdutos();
+    return {produtos};
   }
 
-  @Get('form-produto')
-  @Render('produto')
-  formProduto(@Query('produto') produto: string) {
-    const produtos = this.appService.obterProdutos();
-    const context = { produtos };
-    return context;
+  @Get('adicionar')
+  @Render('form-produto')
+  formulario() {
+    return {}
   }
 
-  @Post('adicionar-Produto')
-  adicionarProduto(@Res() res: Response, @Body() input: ProdutoInput) {
-    const produto = this.appService.adicionarProduto(input)
-    res.redirect(`/form-produto?produto=${produto}`)
+  @Post('form-Produto')
+  adicionarProduto(@Res() res: Response, @Body() np: ProdutoDto) {
+    this.appService.adicionarProduto(np);
+    res.redirect(`/produtos`);
   }
+
+  @Delete('produtos')
+  removerProduto(@Res() res: Response, @Query() id: number) {
+    this.appService.removerProduto(id);
+    res.redirect(`/produtos`)
+  }
+
 
 }

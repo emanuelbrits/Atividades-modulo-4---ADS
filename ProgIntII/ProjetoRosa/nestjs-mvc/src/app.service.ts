@@ -1,77 +1,43 @@
 import { Injectable } from '@nestjs/common';
 import { error } from 'console';
-
-export interface Produto {
-	nome: string;
-	status: boolean;
-	destinacao: string;
-	TaxaRentabilidadeAA: number;
-	prazo: number;
-	TaxaAdministracao: number
-}
-
-let produtos: Produto[]= []
+import { ProdutoDto } from './produto.dto';
+import { Produto } from './produto';
+import { validate } from 'class-validator';
 
 @Injectable()
 export class AppService {
-	adicionarProduto(p: Produto) {
-		if(this.validarProduto(p)) {
-			produtos.push(p)
-		} else {
-			throw error
-		}
-	}
 
-	validarNome(p: Produto) {
-		if(p.nome.length > 0 && p.nome.length <= 32) {
-			return true;
-		} else {
-			return false;
-		}
-	}
 
-	validarDestinacao(p: Produto) {
-		if(p.destinacao.length > 0 && p.destinacao.length <= 180) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	produtos: Produto[] = []
 
-	validarTaxaRentabilidadeAA(p: Produto) {
-		if(Number.isInteger(p.TaxaRentabilidadeAA) && p.TaxaRentabilidadeAA > 0 && p.TaxaRentabilidadeAA <= 20) {
-			return true
-		} else {
-			return false
-		}
-	}
+	ultimoId: number = this.produtos.length + 1
 
-	validarPrazo(p: Produto) {
-		if(p.prazo >= 0 && p.prazo <= 48) {
-			return true
-		} else {
-			return false
-		}
-	}
+	async adicionarProduto(p: ProdutoDto) {
+		const errors = await validate(p);
 
-	validarTaxaAdministracao(p: Produto) {
-		if(p.TaxaAdministracao > 0) {
-			return true
-		} else {
-			return false
+		if (errors.length > 0) {
+		throw new Error('Erro de validação');
 		}
-	}
 
-	validarProduto(p: Produto) {
-		if(this.validarNome(p) && this.validarDestinacao(p) && this.validarTaxaRentabilidadeAA(p)
-		&& this.validarPrazo(p) && this.validarTaxaAdministracao(p)) {
-			return true
-		} else {
-			return false
+		const id: number = this.ultimoId
+
+		const produto: Produto = {
+			id, ...p
 		}
+		
+		this.produtos.push(produto)
+		this.ultimoId++
 	}
 
 	obterProdutos() {
-		return produtos
+		return this.produtos
+	}
+
+	removerProduto(id: number) {
+		let indexProcurado = this.produtos.findIndex(prod => prod.id === id)
+
+		if(indexProcurado !== -1){
+			this.produtos.splice(indexProcurado, 1)
+		}
 	}
 }
