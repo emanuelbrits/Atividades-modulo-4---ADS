@@ -196,9 +196,7 @@ export class Banco {
             throw new Error("Saldo insuficiente.")
         }
 
-        if(contaprocurada._saldo - valor >= 0){
-            contaprocurada.sacar(valor)
-        }
+        contaprocurada.sacar(valor)
             
     }
 
