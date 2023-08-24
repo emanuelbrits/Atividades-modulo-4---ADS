@@ -17,15 +17,12 @@ public class Post {
     }
 
     public void publish() {
-        if (status == Status.DRAFT) {
-            if (text.trim().length() > 0) {
-                setStatus(Status.PUBLISHED);
-                System.out.println("Post publicado");
-            } else {
-                throw new RuntimeException("Um post deve conter texto");
-            }
+
+        if(!validate()) {
+            throw new RuntimeException("Post inválido");
         } else {
-                throw new RuntimeException("Um post deve ser rascunho para ser publicado");
+            setStatus(Status.PUBLISHED);
+            System.out.println("Post publicado");
         }
     }
 
@@ -53,5 +50,15 @@ public class Post {
 	public void setStatus(Status status) {
 		this.status = status;
 	}
+
+    public boolean validate() {
+        if (status == Status.DRAFT) {
+            if (text.trim().length() > 0) {
+                return true;
+            }
+        }
+        
+        return false;
+    }
     
 }
