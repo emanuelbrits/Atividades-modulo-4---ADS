@@ -10,11 +10,12 @@
     <h1>Adicionar produto</h1>
   <form action="form-produto" method="POST">
     <input type="text" name="nome" placeholder="Nome...">
-    <input type="text" name="status" placeholder="Status...">
     <input type="text" name="destinacao" placeholder="Destinacao...">
-    <input type="number" name="TaxaRentabilidadeAA" placeholder="Taxa de rentabilidade a.a...">
-    <input type="number" name="prazo" placeholder="Prazo...">
-    <input type="number" name="TaxaAdministracao" placeholder="Taxa de administração...">
+    <input type="number" name="TaxaRentabilidadeAA" step="1"
+      placeholder="Taxa de rentabilidade a.a...">
+    <input type="number" name="TaxaAdministracao" step="1" 
+      placeholder="Taxa de administração...">
+    <input type="date" name="prazo" placeholder="Prazo...">
     <input type="submit" value="Adicionar produto">
   </form>
   <hr>

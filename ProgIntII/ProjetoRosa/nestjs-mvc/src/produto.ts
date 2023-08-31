@@ -1,19 +1,14 @@
+export enum ProdutoStatus {
+	DISPONIVEL = 'Disponível',
+	INDISPONIVEL = 'Indisponível',
+}
+
 export class Produto {
-    id: number;
+    id: string;
 	nome: string;
-	status: string;
+	status: ProdutoStatus;
 	destinacao: string;
 	TaxaRentabilidadeAA: number;
-	prazo: number;
 	TaxaAdministracao: number
-
-	constructor(i: number, n: string, s: string, d: string, traa: number, p: number, ta: number) {
-		this.id - i;
-        this.nome = n;
-		this.status = s;
-		this.destinacao = d;
-		this.TaxaRentabilidadeAA = traa;
-		this.prazo = p;
-		this.TaxaAdministracao = ta;
-	}
+	prazo: Date;
 }

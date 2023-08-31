@@ -1,15 +1,16 @@
 import { IsInt, IsNotEmpty, MaxLength, Min, Max } from 'class-validator'
+import { ProdutoStatus } from './produto';
 
 export class ProdutoDto {
 
-	id: number;
+	id: string;
 	
 	@IsNotEmpty()
 	@MaxLength(32)
     nome: string;
 
 	@IsNotEmpty()
-	status: string;
+	status: ProdutoStatus;
 
 	@IsNotEmpty()
 	@MaxLength(180)
@@ -19,14 +20,14 @@ export class ProdutoDto {
     @Min(1)
     @Max(20)
 	TaxaRentabilidadeAA: number;
+	
+	@IsInt()
+	@Min(0)
+	@Max(100)
+	TaxaAdministracao: number
 
 	@IsInt()
     @Min(0)
     @Max(48)
-	prazo: number;
-
-	@IsInt()
-    @Min(0)
-    @Max(100)
-	TaxaAdministracao: number
+	prazo: Date;
 }

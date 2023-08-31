@@ -1,4 +1,4 @@
-import { Controller, Get, Query, Render, Post, Res, Body, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Query, Render, Post, Res, Body, Param, Delete, Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ProdutoDto } from './produto.dto';
 import { Response } from 'express';
@@ -18,20 +18,26 @@ export class AppController {
   @Get('adicionar')
   @Render('form-produto')
   formulario() {
-    return {}
+    return
   }
 
   @Post('form-Produto')
-  adicionarProduto(@Res() res: Response, @Body() np: ProdutoDto) {
-    this.appService.adicionarProduto(np);
-    res.redirect(`/produtos`);
+  @Redirect('produtos')
+  salvarProduto(@Body() input: ProdutoDto) {
+    this.appService.adicionarProduto(input)
   }
 
-  @Delete('produtos')
-  removerProduto(@Res() res: Response, @Query() id: number) {
-    this.appService.removerProduto(id);
-    res.redirect(`/produtos`)
+  @Get('alternar-status')
+  @Redirect('produtos')
+  alterarStatus(@Query('id') idProduto: string) {
+    this.appService.alternarStatus(idProduto)
+    return
   }
 
+  @Get('remover')
+  @Redirect('produtos')
+  removerProduto(@Query('id') idProduto: string) {
+    this.appService.removerProduto(idProduto)
+  }
 
 }

@@ -1,8 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { error } from 'console';
 import { ProdutoDto } from './produto.dto';
-import { Produto } from './produto';
+import { Produto, ProdutoStatus } from './produto';
 import { validate } from 'class-validator';
+import { ulid } from 'ulidx';
 
 @Injectable()
 export class AppService {
@@ -10,34 +11,42 @@ export class AppService {
 
 	produtos: Produto[] = []
 
-	ultimoId: number = this.produtos.length + 1
-
-	async adicionarProduto(p: ProdutoDto) {
-		const errors = await validate(p);
-
-		if (errors.length > 0) {
-		throw new Error('Erro de validação');
-		}
-
-		const id: number = this.ultimoId
-
+	public async adicionarProduto(input: ProdutoDto) {
 		const produto: Produto = {
-			id, ...p
+			...input,
+			id: ulid(),
+			status: ProdutoStatus.DISPONIVEL
 		}
 		
 		this.produtos.push(produto)
-		this.ultimoId++
 	}
 
 	obterProdutos() {
 		return this.produtos
 	}
 
-	removerProduto(id: number) {
-		let indexProcurado = this.produtos.findIndex(prod => prod.id === id)
+	obterId(id: string): Produto | undefined {
+		const produto = this.produtos.find((p) => p.id === id)
+		return produto
+	}
 
-		if(indexProcurado !== -1){
-			this.produtos.splice(indexProcurado, 1)
+	alternarStatus(idProduto: string) {
+		const produto = this.obterId(idProduto);
+
+		if(!produto) return;
+
+		if(produto.status === ProdutoStatus.DISPONIVEL) {
+			produto.status = ProdutoStatus.INDISPONIVEL
+		} else {
+			produto.status =ProdutoStatus.DISPONIVEL
 		}
+	}
+
+	removerProduto(idProduto: string) {
+		const index = this.produtos.findIndex((p) => p.id === idProduto)
+
+		if(index === -1) return 
+
+		this.produtos.splice(index, 1)
 	}
 }
