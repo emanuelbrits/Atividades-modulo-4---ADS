@@ -10,5 +10,7 @@ export class Produto {
 	destinacao: string;
 	TaxaRentabilidadeAA: number;
 	TaxaAdministracao: number
-	prazo: Date;
+	datavencimento: Date;
+	prazo: number;
+	liquidezDiaria: string;
 }

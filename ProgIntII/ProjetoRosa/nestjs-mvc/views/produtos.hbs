@@ -12,31 +12,27 @@
     <table>
       <tr>
         <th>nome</th>
-        <th>status</th>
         <th>destinacao</th>
+        <th>status</th>
         <th>Taxa de rentabilidade ao ano</th>
-        <th>prazo</th>
         <th>Taxa de administração</th>
-        <th>Id</th>
+        <th>Liquidez diária</th>
+        <th>Prazo</th>
+        <th>Data de vencimento</th>
       </tr>
     {{#each produtos}}
       <tr>
         <td>{{nome}}</td>
-        <td>{{status}}</td>
         <td>{{destinacao}}</td>
+        <td>{{status}}</td>
         <td>{{TaxaRentabilidadeAA}}</td>
-        <td>{{prazo}}</td>
         <td>{{TaxaAdministracao}}</td>
-        <td>{{id}}</td>
+        <td>{{liquidezDiaria}}</td>
+        <td>{{prazo}}</td>
+        <td>{{datavencimento}}</td>
         <td>
-          <a href="produtos/alternar-status?id={{id}}">
-            {{#if produto.disponivel}}
-              Disponibilizar
-            {{else}}
-              Suspender
-            {{/if}}
-          </a>
-          <a href="produtos/remover?id={{id}}">Remover</a>
+          <a href="alternar-status?id={{id}}">Alterar status</a>
+          <a href="remover?id={{id}}">Remover</a>
         </td>
       </tr>
     {{/each}}

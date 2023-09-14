@@ -1,7 +1,7 @@
-import { Controller, Get, Query, Render, Post, Res, Body, Param, Delete, Redirect } from '@nestjs/common';
+import { Controller, Get, Query, Render, Post,  Body,  Redirect } from '@nestjs/common';
 import { AppService } from './app.service';
 import { ProdutoDto } from './produto.dto';
-import { Response } from 'express';
+import { Response, response } from 'express';
 import { Produto } from './produto';
 
 @Controller()

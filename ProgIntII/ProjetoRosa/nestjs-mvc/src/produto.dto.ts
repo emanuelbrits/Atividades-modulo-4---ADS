@@ -29,5 +29,9 @@ export class ProdutoDto {
 	@IsInt()
     @Min(0)
     @Max(48)
-	prazo: Date;
+	datavencimento: Date;
+
+	prazo: number;
+
+	liquidezDiaria: string;
 }

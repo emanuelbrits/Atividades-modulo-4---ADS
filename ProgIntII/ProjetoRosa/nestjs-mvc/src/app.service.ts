@@ -12,6 +12,17 @@ export class AppService {
 	produtos: Produto[] = []
 
 	public async adicionarProduto(input: ProdutoDto) {
+
+		if(input.nome.length > 32) {
+			return error
+		} else if (input.destinacao.length > 180) {
+			return error
+		} else if (input.TaxaRentabilidadeAA > 20 || input.TaxaRentabilidadeAA < 1) {
+			return error
+		} else if (input.prazo > 48 || input.prazo < 0) {
+			return error
+		}
+
 		const produto: Produto = {
 			...input,
 			id: ulid(),
