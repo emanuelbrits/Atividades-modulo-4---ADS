@@ -1,0 +1,12 @@
+ID: 1
+Texto: Oi
+Autor: Emanuel
+Data: 2023-10-05T12:35:54.564794700
+Quantidade de Likes: 0;
+
+ID: 2
+Texto: Ola
+Autor: Emanuel
+Data: 2023-10-05T12:35:54.564794700
+Quantidade de Likes: 0;
+
