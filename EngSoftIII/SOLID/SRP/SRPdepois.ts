@@ -7,10 +7,6 @@ class Produto {
         this.preco = precoProduto;
     }
 
-    save(repositorio: ProdutoRepository): void {
-        repositorio.produtos.push(this)
-    }
-
     getNome(): string {
         return (this.nome)
     }
@@ -36,6 +32,6 @@ class ProdutoRepository
 const produto = new Produto('Carne', 19.99);
 
 const produtoRepository = new ProdutoRepository();
-produto.save(produtoRepository);
+produtoRepository.save(produto);
 
 const produtoObtido = console.log(produtoRepository.getProdutos());

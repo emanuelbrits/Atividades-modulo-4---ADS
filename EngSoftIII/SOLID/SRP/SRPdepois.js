@@ -1,3 +1,16 @@
+var Produto = /** @class */ (function () {
+    function Produto(nomeProduto, precoProduto) {
+        this.nome = nomeProduto || '';
+        this.preco = precoProduto;
+    }
+    Produto.prototype.getNome = function () {
+        return (this.nome);
+    };
+    Produto.prototype.getPreco = function () {
+        return (this.preco);
+    };
+    return Produto;
+}());
 var ProdutoRepository = /** @class */ (function () {
     function ProdutoRepository() {
         this.produtos = [];
@@ -10,23 +23,7 @@ var ProdutoRepository = /** @class */ (function () {
     };
     return ProdutoRepository;
 }());
-var Produto = /** @class */ (function () {
-    function Produto(nomeProduto, precoProduto) {
-        this.nome = nomeProduto || '';
-        this.preco = precoProduto;
-    }
-    Produto.prototype.save = function (repositorio) {
-        repositorio.produtos.push(this);
-    };
-    Produto.prototype.getNome = function () {
-        return (this.nome);
-    };
-    Produto.prototype.getPreco = function () {
-        return (this.preco);
-    };
-    return Produto;
-}());
 var produto = new Produto('Carne', 19.99);
 var produtoRepository = new ProdutoRepository();
-produto.save(produtoRepository);
+produtoRepository.save(produto);
 var produtoObtido = console.log(produtoRepository.getProdutos());
