@@ -1,26 +1,24 @@
-import { ConnectionPool, Request } from 'mssql';
+class CartaoDeCredito {
+    saldo: number = 0
 
-class ProdutoRepository {
-    private connection: ConnectionPool;
-
-    constructor(connection: ConnectionPool) {
-        this.connection = connection;
-    }
-
-    async save(): Promise<void> {
-    }
-
-    async getProduct(): Promise<Produto | null> {
-        return null;
+    pagar(preco: number): boolean {
+        this.saldo -= preco
+        return true;
     }
 }
 
-class Produto {
-    Nome: string;
-    Preco: number;
+class CartaoDeDedito {
+    saldo: number = 0
 
-    constructor(nome: string, preco: number) {
-        this.Nome = nome;
-        this.Preco = preco;
+    pagar(preco: number): boolean {
+        this.saldo -= preco
+        return true;
     }
 }
+
+class Cliente {
+    formaDePagamento: CartaoDeCredito = new CartaoDeCredito();
+}
+
+const cliente: Cliente = new Cliente();
+cliente.formaDePagamento.pagar(100);
